@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import java.lang.reflect.Array;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +26,16 @@ public class Chassis extends SubsystemBase {
     _FR.setInverted(true);
     _BR = new TalonSRX(4);
     _BR.follow(_FR);
+  }
+
+  public void drive(double throttle, double turn) {
+    _FL.set(ControlMode.PercentOutput, 0.7 * throttle + 0.3 * turn);
+    _FR.set(ControlMode.PercentOutput, 0.7 * throttle - 0.3 * turn);
+  }
+
+  public void stop() {
+    _FL.set(ControlMode.PercentOutput, 0.);
+    _FR.set(ControlMode.PercentOutput, 0.);
   }
 
   @Override

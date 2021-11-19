@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.RunMotor;
+import frc.robot.commands.RunMotorMotionMagic;
 import frc.robot.commands.RunMotorWithController;
 import frc.robot.commands.RunMotorWithSensor;
 import frc.robot.commands.RunServo;
@@ -97,7 +98,8 @@ public class Robot extends TimedRobot {
     //_homeRotationalServoCommand = m_robotContainer.getHomeRotationalServoCommand();
     //_homeRotationalServoCommand.schedule();
 
-    _runMotorWithSensorCommand = new RunMotorWithSensor();
+    //_runMotorWithSensorCommand = new RunMotorWithSensor();
+    _motorSubsystem.zeroEncoder();
   }
 
   /**
@@ -105,7 +107,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    _runMotorWithSensorCommand.schedule();
+    //_runMotorWithSensorCommand.schedule();
+    //_motorSubsystem.runMotorWithSensor();
+    CommandScheduler.getInstance().schedule(new RunMotorMotionMagic());
   }
 
   @Override
@@ -117,8 +121,8 @@ public class Robot extends TimedRobot {
 
     //_runServoCommand = m_robotContainer.getRunServoCommand();
     //_runServoCommand.schedule();
-    _setRotationalServoWithControllerCommand = m_robotContainer.getSetRotationalServoWithControllerCommand();
-    _setRotationalServoWithControllerCommand.schedule();
+    //_setRotationalServoWithControllerCommand = m_robotContainer.getSetRotationalServoWithControllerCommand();
+    //_setRotationalServoWithControllerCommand.schedule();
     // _runMotorCommand = m_robotContainer.getRunMotorCommand();
     // _runMotorCommand.schedule();
     // _runRotationalServoCommand = m_robotContainer.getRunRotationalServoCommand();
@@ -126,8 +130,8 @@ public class Robot extends TimedRobot {
 
     /*_runMotorWithButtonCommand = m_robotContainer.getRunMotorWithButtonCommand();
     _runMotorWithButtonCommand.schedule();*/
-    _runMotorWithControllerCommand = m_robotContainer.getRunMotorWithControllerCommand();
-    _runMotorWithControllerCommand.schedule();
+    //_runMotorWithControllerCommand = m_robotContainer.getRunMotorWithControllerCommand();
+    //_runMotorWithControllerCommand.schedule();
     //_toggleSolenoidCommand = m_robotContainer.getToggleSolenoidCommand();
     //_toggleSolenoidCommand.schedule();
   }
@@ -140,19 +144,21 @@ public class Robot extends TimedRobot {
     // _runMotorCommand.schedule();
     //_runServoCommand.schedule();
     //_runRotationalServoCommand.schedule();
-    _setRotationalServoWithControllerCommand.schedule();
+    //_setRotationalServoWithControllerCommand.schedule();
     //_runMotorWithControllerCommand.schedule();
     //_toggleSolenoidCommand.schedule();
-    _solenoidSubsystem.toggleSolenoidWithController();
+    //_solenoidSubsystem.toggleSolenoidWithController();
     //_motorSubsystem.runMotorWithController();
-    _motorSubsystem.runMotorWithButton();
-    _servoSubsystem.setServoWithController();
+    //_motorSubsystem.runMotorWithButton();
+    //_servoSubsystem.setServoWithController();
+    _motorSubsystem.runMotorMotionMagic();
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    _motorSubsystem.zeroEncoder();
   }
 
   /**
@@ -160,5 +166,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    CommandScheduler.getInstance().schedule(new RunMotorMotionMagic());
+
   }
 }

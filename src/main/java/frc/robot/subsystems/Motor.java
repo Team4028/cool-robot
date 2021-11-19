@@ -33,6 +33,20 @@ public class Motor extends SubsystemBase {
     _m.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     _m.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
     _controller = new RobotController(RobotMap.CONTROLLER_PORT);
+
+    _m.selectProfileSlot(0, 0);
+    _m.config_kF(0, 0.1118);
+    _m.config_kP(0, 1.44);
+    _m.config_kI(0, 0.002);
+    _m.config_kD(0, 0);
+    _m.config_IntegralZone(0, 50);
+
+    _m.configMotionCruiseVelocity(3661);
+    _m.configMotionAcceleration(1800);
+  }
+
+  public void zeroEncoder() {
+    _m.setSelectedSensorPosition(0);
   }
 
   public void runMotor(double speedPercent) {
@@ -59,6 +73,13 @@ public class Motor extends SubsystemBase {
     } else {
       stopMotor();
     }
+  }
+
+  public void runMotorMotionMagic() {
+    double targetPos = 4096 * 10.;
+    System.out.println("\tTarget: " + targetPos);
+    System.out.println("\tError: " + _m.getClosedLoopError(0));
+    _m.set(ControlMode.MotionMagic, targetPos);
   }
 
   public void runMotorWithController() {

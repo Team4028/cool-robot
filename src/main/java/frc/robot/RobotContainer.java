@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.HomeServo;
 import frc.robot.commands.RunMotor;
+import frc.robot.commands.RunMotorMotionMagic;
 import frc.robot.commands.RunMotorWithButton;
 import frc.robot.commands.RunMotorWithController;
 import frc.robot.commands.RunMotorWithSensor;
@@ -39,7 +40,6 @@ public class RobotContainer {
   private final RunMotorWithButton _runMotorWithButtonCommand = new RunMotorWithButton();
   private final SetRotationalServoWithController _setRotationalServoWithControllerCommand = new SetRotationalServoWithController();
   private final RunMotorWithSensor _runMotorWithSensorCommand = new RunMotorWithSensor();
-
 
 
   /**
